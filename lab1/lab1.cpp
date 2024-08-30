@@ -2,69 +2,82 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+typedef struct  {
+	char Name[10];
+	char Famil[15];
+	int age, Nomzach;
+}student;
+
+void searchNF(student list[], int c, const char* Name, const char* Famil) {
+	int s = 0;
+	for (int i = 0; i < c; i++)
+	{
+		if (strcmp(list[i].Name, Name) == 0 && (strcmp(list[i].Famil, Famil) == 0)) {
+			printf("Result:%s %s age:%d, num: %d", list[i].Name, list[i].Famil, list[i].age, list[i].Nomzach);
+			break;
+			s = 1;
+		}
+	
+	}
+	if (s != 1) {
+		printf("Not found");
+	}
+}
+
+void searchZ(student list[], int c, int Nomzach) {
+	int s = 0;
+	for (int i = 0; i < c; i++)
+	{
+		if (Nomzach==list[i].Nomzach) {
+			printf("Result:%s %s age:%d, num: %d", list[i].Name, list[i].Famil, list[i].age, list[i].Nomzach);
+			s = 1;
+			break;
+			
+		}
+	}
+	if (s == 0) {
+		printf("Not found");
+	}
+}
 
 int main()
 {
-    int max=100, min=-100, i = 0,j=0, line=0, column=0, t, sumpr=0;
-    int **a;
-    int* sum=nullptr;
+	char SName[10], SFamil[15];
+	int count = 0, sNomzach=0, t;
+	student st_list[10];
+	printf("Count stidents:");
+	scanf("%d", &count);
+	for (int i = 0; i < count; i++) {
+		printf("name student Num%d:", i + 1);
+		scanf("%s", st_list[i].Name);
+		printf("surname student Num%d:", i + 1);
+		scanf("%s", st_list[i].Famil);
+		printf("age student Num%d:", i + 1);
+		scanf("%d", &st_list[i].age);
+		printf("number record book student Num%d:", i + 1);
+		scanf("%d", &st_list[i].Nomzach);
+	}
 
-    printf("input count line mass:");
-    scanf("%d", &line);
-    printf("input count column mass:");
-    scanf("%d", &column);
-
-    a = (int**)malloc((line*2) * sizeof(int));
-
-    for (i=0; i < line; i++) {
-        a[i] = (int*)malloc(column * sizeof(int));
-        for (j=0; j < column; j++) {
-            a[i][j] = min+ rand()%(max-min+1);
-            printf("%d ",a[i][j]);
-        }
-        printf("\n");
-    }
-
-    printf("inut 1 for sum column or input 2 for sum line: ");
-    scanf("%d", &t);
-    if (t == 1) {
-        sum = (int*)malloc(column * sizeof(int)+1);
-            for (j = 0; j < column; j++) { 
-                sumpr = 0;
-                for (i = 0; i < line; i++) {
-                    sumpr = sumpr + a[i][j];
-                }
-                sum[j] = sumpr;
-            }  
-            for (int k = 0; k < column; k++) {
-                printf("sum Column %d=%d ", k, sum[k]);
-            }
-            free(sum);
-    }
-    else if (t == 2) {
-        sum = (int*)malloc(line * sizeof(int) + 1);
-        for (i = 0; i < line; i++) {
-            sumpr = 0;
-            for (j = 0; j < column; j++) {
-                sumpr = sumpr + a[i][j];
-            }
-            sum[i] = sumpr;
-        }
-        for (int k = 0; k < column; k++) {
-            printf("sum line %d=%d ", k, sum[k]);
-        }
-        free(sum);
-    }
-    else
-    {
-        printf("error");
-    }
-    
-    
-    for (i = 0; i < line; i++) {
-        free(a[i]);
-    }
-    free(a);
-    return 0;
+	printf("1-search by name or 2-search by record book: ");
+	scanf("%d", &t);
+	if (t == 1) {
+		printf("input needed Name:");
+		scanf("%s", SName);
+		printf("input needed Surname:");
+		scanf("%s", SFamil);
+		searchNF(st_list, count, SName, SFamil);
+	}
+	else if (t == 2) {
+		printf("input needed number record book:");
+		scanf("%d", &sNomzach);
+		searchZ(st_list, count, sNomzach);
+	}
+	else
+	{
+		printf("Error");
+	}
+	return 0;
 }
 
